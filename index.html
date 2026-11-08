@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K7kashi Cyber Lab</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background: #050908;
+    color: #00ff88;
+}
+
+.container {
+    width: 100%;
+    max-width: 430px;
+    padding: 28px;
+    background: #0b1511;
+    border: 1px solid #00ff8855;
+    border-radius: 16px;
+    box-shadow: 0 0 30px #00ff881c;
+}
+
+h1 {
+    text-align: center;
+    font-size: 30px;
+    text-shadow: 0 0 15px #00ff88;
+}
+
+.subtitle {
+    text-align: center;
+    color: #9bb9a8;
+    font-size: 13px;
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin: 14px 0 8px;
+    color: #00ff88;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #176b45;
+    border-radius: 8px;
+    background: #050b08;
+    color: white;
+    outline: none;
+    font-size: 15px;
+}
+
+input:focus {
+    border-color: #00ff88;
+    box-shadow: 0 0 10px #00ff8833;
+}
+
+button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 16px;
+    border: none;
+    border-radius: 8px;
+    background: #00ff88;
+    color: #001a0c;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #00cc70;
+}
+
+button:disabled {
+    opacity: .5;
+    cursor: wait;
+}
+
+.result {
+    display: none;
+    margin-top: 22px;
+    padding: 15px;
+    border: 1px solid #176b45;
+    border-radius: 10px;
+    background: #07100b;
+}
+
+.progress {
+    height: 12px;
+    background: #19271f;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+.bar {
+    width: 0%;
+    height: 100%;
+    background: #00ff88;
+    transition: width .2s;
+}
+
+#status {
+    text-align: center;
+    color: #b5d9c2;
+    font-size: 14px;
+}
+
+#strength {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.notice {
+    margin-top: 20px;
+    color: #82988b;
+    font-size: 11px;
+    line-height: 1.8;
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>K7KASHI</h1>
+    <div class="subtitle">CYBER SECURITY LAB | PASSWORD TEST</div>
+
+    <label for="password">كلمة مرور تجريبية:</label>
+    <input
+        type="password"
+        id="password"
+        placeholder="اكتب كلمة مرور للاختبار"
+        autocomplete="off"
+    >
+
+    <button id="startBtn" onclick="startTest()">
+        ⚡ ابدأ الاختبار
+    </button>
+
+    <div class="result" id="result">
+
+        <div id="status">جاري التحليل...</div>
+
+        <div class="progress">
+            <div class="bar" id="bar"></div>
+        </div>
+
+        <div id="strength"></div>
+        <p id="details"></p>
+
+    </div>
+
+    <div class="notice">
+        ⚠️ مختبر تعليمي محلي. لا تستخدم كلمات مرور حقيقية.
+        لا يتم حفظ البيانات أو إرسالها إلى أي خادم.
+        المحاكاة ليست عملية اختراق فعلية.
+    </div>
+
+</div>
+
+<script>
+
+function startTest() {
+
+    const password = document.getElementById("password").value;
+    const button = document.getElementById("startBtn");
+    const result = document.getElementById("result");
+    const bar = document.getElementById("bar");
+    const status = document.getElementById("status");
+    const strength = document.getElementById("strength");
+    const details = document.getElementById("details");
+
+    if (!password) {
+        alert("اكتب كلمة مرور تجريبية أولاً!");
+        return;
+    }
+
+    let score = 0;
+
+    if (password.length >= 8) score++;
+    if (password.length >= 12) score++;
+    if (/[a-z]/.test(password)) score++;
+    if (/[A-Z]/.test(password)) score++;
+    if (/[0-9]/.test(password)) score++;
+    if (/[^a-zA-Z0-9]/.test(password)) score++;
+
+    let level;
+    let color;
+
+    if (score <= 2) {
+        level = "ضعيفة جداً ⚠️";
+        color = "#ff4545";
+    } else if (score <= 4) {
+        level = "متوسطة 🟡";
+        color = "#ffcc33";
+    } else {
+        level = "قوية جداً 🟢";
+        color = "#00ff88";
+    }
+
+    result.style.display = "block";
+    button.disabled = true;
+    bar.style.width = "0%";
+    status.textContent = "جاري تحليل قوة كلمة المرور...";
+    strength.textContent = "";
+    details.textContent = "";
+
+    let progress = 0;
+
+    const timer = setInterval(() => {
+
+        progress += 5;
+        bar.style.width = progress + "%";
+
+        if (progress === 25) {
+            status.textContent = "فحص طول كلمة المرور...";
+        }
+
+        if (progress === 50) {
+            status.textContent = "فحص تنوع الأحرف والأرقام...";
+        }
+
+        if (progress === 75) {
+            status.textContent = "تقييم مستوى الحماية...";
+        }
+
+        if (progress >= 100) {
+
+            clearInterval(timer);
+
+            status.textContent = "اكتمل التحليل!";
+
+            strength.textContent = "مستوى الحماية: " + level;
+            strength.style.color = color;
+
+            details.textContent =
+                "نتيجة التقييم: " + score + " من 6" +
+                " — هذا تقدير مبسط وليس اختبار تخمين فعلي.";
+
+            button.disabled = false;
+        }
+
+    }, 100);
+
+}
+
+</script>
+
+</body>
+</html>
