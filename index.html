@@ -4,133 +4,104 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>K7kashi Cyber Lab</title>
+
+<title>K7KASHI CYBER LAB</title>
 
 <style>
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+}
 
 body {
     margin: 0;
     min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: #050908;
+    color: #00ff88;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
-    font-family: Arial, sans-serif;
-    background: #050908;
-    color: #00ff88;
 }
 
 .container {
     width: 100%;
-    max-width: 430px;
-    padding: 28px;
+    max-width: 450px;
+    padding: 35px 25px;
     background: #0b1511;
     border: 1px solid #00ff8855;
-    border-radius: 16px;
-    box-shadow: 0 0 30px #00ff881c;
+    border-radius: 18px;
+    box-shadow: 0 0 35px #00ff8820;
+    text-align: center;
 }
 
-h1 {
-    text-align: center;
-    font-size: 30px;
-    text-shadow: 0 0 15px #00ff88;
+.logo {
+    font-size: 36px;
+    font-weight: bold;
+    text-shadow: 0 0 18px #00ff88;
+    letter-spacing: 2px;
 }
 
 .subtitle {
-    text-align: center;
     color: #9bb9a8;
-    font-size: 13px;
-    margin-bottom: 25px;
+    font-size: 12px;
+    margin-top: 10px;
+    letter-spacing: 2px;
 }
 
-label {
-    display: block;
-    margin: 14px 0 8px;
-    color: #00ff88;
+.line {
+    height: 1px;
+    background: #176b45;
+    margin: 28px 0;
 }
 
-input {
-    width: 100%;
-    padding: 13px;
-    border: 1px solid #176b45;
-    border-radius: 8px;
-    background: #050b08;
-    color: white;
-    outline: none;
-    font-size: 15px;
+h2 {
+    font-size: 23px;
+    margin-bottom: 12px;
 }
 
-input:focus {
-    border-color: #00ff88;
-    box-shadow: 0 0 10px #00ff8833;
+.description {
+    color: #9bb9a8;
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 28px;
 }
 
 button {
     width: 100%;
-    padding: 13px;
-    margin-top: 16px;
-    border: none;
-    border-radius: 8px;
+    padding: 15px;
+    margin-top: 13px;
+    border: 1px solid #00ff88;
+    border-radius: 9px;
     background: #00ff88;
     color: #001a0c;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 button:hover {
     background: #00cc70;
+    box-shadow: 0 0 18px #00ff8866;
+    transform: translateY(-2px);
 }
 
-button:disabled {
-    opacity: .5;
-    cursor: wait;
+button.login {
+    background: transparent;
+    color: #00ff88;
 }
 
-.result {
-    display: none;
-    margin-top: 22px;
-    padding: 15px;
-    border: 1px solid #176b45;
-    border-radius: 10px;
-    background: #07100b;
-}
-
-.progress {
-    height: 12px;
-    background: #19271f;
-    border-radius: 20px;
-    overflow: hidden;
-    margin: 15px 0;
-}
-
-.bar {
-    width: 0%;
-    height: 100%;
-    background: #00ff88;
-    transition: width .2s;
-}
-
-#status {
-    text-align: center;
-    color: #b5d9c2;
-    font-size: 14px;
-}
-
-#strength {
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 12px;
+button.login:hover {
+    background: #00ff8815;
 }
 
 .notice {
-    margin-top: 20px;
+    margin-top: 30px;
     color: #82988b;
     font-size: 11px;
-    line-height: 1.8;
-    text-align: center;
 }
+
 </style>
 </head>
 
@@ -138,128 +109,41 @@ button:disabled {
 
 <div class="container">
 
-    <h1>K7KASHI</h1>
-    <div class="subtitle">CYBER SECURITY LAB | PASSWORD TEST</div>
+    <div class="logo">K7KASHI</div>
 
-    <label for="password">كلمة مرور تجريبية:</label>
-    <input
-        type="password"
-        id="password"
-        placeholder="اكتب كلمة مرور للاختبار"
-        autocomplete="off"
-    >
-
-    <button id="startBtn" onclick="startTest()">
-        ⚡ ابدأ الاختبار
-    </button>
-
-    <div class="result" id="result">
-
-        <div id="status">جاري التحليل...</div>
-
-        <div class="progress">
-            <div class="bar" id="bar"></div>
-        </div>
-
-        <div id="strength"></div>
-        <p id="details"></p>
-
+    <div class="subtitle">
+        CYBER SECURITY LAB
     </div>
 
+    <div class="line"></div>
+
+    <h2>مرحباً بك في المختبر</h2>
+
+    <div class="description">
+        تعلّم الأمن السيبراني واكتشف عالم الاختبار الأخلاقي
+        في بيئة تعليمية خاصة.
+    </div>
+
+    <button onclick="showMessage('صفحة إنشاء الحساب')">
+        إنشاء حساب جديد
+    </button>
+
+    <button class="login" onclick="showMessage('صفحة تسجيل الدخول')">
+        تسجيل الدخول
+    </button>
+
     <div class="notice">
-        ⚠️ مختبر تعليمي محلي. لا تستخدم كلمات مرور حقيقية.
-        لا يتم حفظ البيانات أو إرسالها إلى أي خادم.
-        المحاكاة ليست عملية اختراق فعلية.
+        K7KASHI CYBER LAB © 2026
+        <br>
+        جميع الحقوق محفوظة
     </div>
 
 </div>
 
 <script>
-
-function startTest() {
-
-    const password = document.getElementById("password").value;
-    const button = document.getElementById("startBtn");
-    const result = document.getElementById("result");
-    const bar = document.getElementById("bar");
-    const status = document.getElementById("status");
-    const strength = document.getElementById("strength");
-    const details = document.getElementById("details");
-
-    if (!password) {
-        alert("اكتب كلمة مرور تجريبية أولاً!");
-        return;
-    }
-
-    let score = 0;
-
-    if (password.length >= 8) score++;
-    if (password.length >= 12) score++;
-    if (/[a-z]/.test(password)) score++;
-    if (/[A-Z]/.test(password)) score++;
-    if (/[0-9]/.test(password)) score++;
-    if (/[^a-zA-Z0-9]/.test(password)) score++;
-
-    let level;
-    let color;
-
-    if (score <= 2) {
-        level = "ضعيفة جداً ⚠️";
-        color = "#ff4545";
-    } else if (score <= 4) {
-        level = "متوسطة 🟡";
-        color = "#ffcc33";
-    } else {
-        level = "قوية جداً 🟢";
-        color = "#00ff88";
-    }
-
-    result.style.display = "block";
-    button.disabled = true;
-    bar.style.width = "0%";
-    status.textContent = "جاري تحليل قوة كلمة المرور...";
-    strength.textContent = "";
-    details.textContent = "";
-
-    let progress = 0;
-
-    const timer = setInterval(() => {
-
-        progress += 5;
-        bar.style.width = progress + "%";
-
-        if (progress === 25) {
-            status.textContent = "فحص طول كلمة المرور...";
-        }
-
-        if (progress === 50) {
-            status.textContent = "فحص تنوع الأحرف والأرقام...";
-        }
-
-        if (progress === 75) {
-            status.textContent = "تقييم مستوى الحماية...";
-        }
-
-        if (progress >= 100) {
-
-            clearInterval(timer);
-
-            status.textContent = "اكتمل التحليل!";
-
-            strength.textContent = "مستوى الحماية: " + level;
-            strength.style.color = color;
-
-            details.textContent =
-                "نتيجة التقييم: " + score + " من 6" +
-                " — هذا تقدير مبسط وليس اختبار تخمين فعلي.";
-
-            button.disabled = false;
-        }
-
-    }, 100);
-
+function showMessage(page) {
+    alert("سيتم إنشاء " + page + " في المرحلة القادمة!");
 }
-
 </script>
 
 </body>
