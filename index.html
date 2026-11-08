@@ -15,31 +15,31 @@
 body {
     margin: 0;
     min-height: 100vh;
-    font-family: Arial, sans-serif;
-    background: #050908;
-    color: #00ff88;
+    padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    font-family: Arial, sans-serif;
+    background: #050908;
+    color: #00ff88;
 }
 
 .container {
     width: 100%;
     max-width: 450px;
-    padding: 35px 25px;
+    padding: 30px 25px;
     background: #0b1511;
     border: 1px solid #00ff8855;
     border-radius: 18px;
-    box-shadow: 0 0 35px #00ff8820;
+    box-shadow: 0 0 30px #00ff8820;
     text-align: center;
 }
 
 .logo {
     font-size: 36px;
     font-weight: bold;
-    text-shadow: 0 0 18px #00ff88;
     letter-spacing: 2px;
+    text-shadow: 0 0 18px #00ff88;
 }
 
 .subtitle {
@@ -52,28 +52,50 @@ body {
 .line {
     height: 1px;
     background: #176b45;
-    margin: 28px 0;
+    margin: 25px 0;
 }
 
 h2 {
     font-size: 23px;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
 }
 
 .description {
     color: #9bb9a8;
     font-size: 14px;
     line-height: 1.8;
-    margin-bottom: 28px;
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    text-align: right;
+    margin: 15px 0 8px;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    background: #050b08;
+    border: 1px solid #176b45;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #00ff88;
+    box-shadow: 0 0 10px #00ff8833;
 }
 
 button {
     width: 100%;
-    padding: 15px;
-    margin-top: 13px;
+    padding: 14px;
+    margin-top: 14px;
     border: 1px solid #00ff88;
     border-radius: 9px;
-    background: #00ff88;
+    background: #00d979;
     color: #001a0c;
     font-size: 16px;
     font-weight: bold;
@@ -82,24 +104,54 @@ button {
 }
 
 button:hover {
-    background: #00cc70;
+    background: #00ff88;
     box-shadow: 0 0 18px #00ff8866;
-    transform: translateY(-2px);
 }
 
-button.login {
+button.secondary {
     background: transparent;
     color: #00ff88;
 }
 
-button.login:hover {
+button.secondary:hover {
     background: #00ff8815;
 }
 
+.back {
+    display: inline-block;
+    margin-top: 20px;
+    color: #9bb9a8;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.back:hover {
+    color: #00ff88;
+}
+
 .notice {
-    margin-top: 30px;
+    margin-top: 25px;
     color: #82988b;
     font-size: 11px;
+    line-height: 1.8;
+}
+
+.message {
+    display: none;
+    margin-top: 15px;
+    padding: 12px;
+    border: 1px solid #176b45;
+    border-radius: 8px;
+    color: #00ff88;
+    font-size: 13px;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
 }
 
 </style>
@@ -117,33 +169,153 @@ button.login:hover {
 
     <div class="line"></div>
 
-    <h2>مرحباً بك في المختبر</h2>
+    <!-- الصفحة الرئيسية -->
+    <section id="home" class="page active">
 
-    <div class="description">
-        تعلّم الأمن السيبراني واكتشف عالم الاختبار الأخلاقي
-        في بيئة تعليمية خاصة.
-    </div>
+        <h2>مرحباً بك في المختبر</h2>
 
-    <button onclick="showMessage('صفحة إنشاء الحساب')">
-        إنشاء حساب جديد
-    </button>
+        <p class="description">
+            تعلّم الأمن السيبراني واكتشف عالم الاختبار الأخلاقي
+            في بيئة تعليمية خاصة.
+        </p>
 
-    <button class="login" onclick="showMessage('صفحة تسجيل الدخول')">
-        تسجيل الدخول
-    </button>
+        <button onclick="showPage('register')">
+            إنشاء حساب جديد
+        </button>
+
+        <button class="secondary" onclick="showPage('login')">
+            تسجيل الدخول
+        </button>
+
+    </section>
+
+    <!-- صفحة إنشاء الحساب -->
+    <section id="register" class="page">
+
+        <h2>إنشاء حساب جديد</h2>
+
+        <p class="description">
+            أنشئ حسابك في مختبر K7KASHI
+        </p>
+
+        <form onsubmit="registerUser(event)">
+
+            <label for="regUsername">اسم المستخدم:</label>
+            <input
+                type="text"
+                id="regUsername"
+                placeholder="اكتب اسم المستخدم"
+                autocomplete="username"
+                required
+            >
+
+            <label for="regPassword">كلمة المرور:</label>
+            <input
+                type="password"
+                id="regPassword"
+                placeholder="اكتب كلمة المرور"
+                autocomplete="new-password"
+                required
+            >
+
+            <button type="submit">
+                إنشاء الحساب
+            </button>
+
+        </form>
+
+        <div id="registerMessage" class="message"></div>
+
+        <span class="back" onclick="showPage('home')">
+            ← العودة للرئيسية
+        </span>
+
+    </section>
+
+    <!-- صفحة تسجيل الدخول -->
+    <section id="login" class="page">
+
+        <h2>تسجيل الدخول</h2>
+
+        <p class="description">
+            أدخل بيانات حسابك للمتابعة
+        </p>
+
+        <form onsubmit="loginUser(event)">
+
+            <label for="loginUsername">اسم المستخدم:</label>
+            <input
+                type="text"
+                id="loginUsername"
+                placeholder="اكتب اسم المستخدم"
+                autocomplete="username"
+                required
+            >
+
+            <label for="loginPassword">كلمة المرور:</label>
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="اكتب كلمة المرور"
+                autocomplete="current-password"
+                required
+            >
+
+            <button type="submit">
+                تسجيل الدخول
+            </button>
+
+        </form>
+
+        <div id="loginMessage" class="message"></div>
+
+        <span class="back" onclick="showPage('home')">
+            ← العودة للرئيسية
+        </span>
+
+    </section>
+
+    <div class="line"></div>
 
     <div class="notice">
         K7KASHI CYBER LAB © 2026
         <br>
         جميع الحقوق محفوظة
+        <br>
+        مختبر تعليمي للأمن السيبراني
     </div>
 
 </div>
 
 <script>
-function showMessage(page) {
-    alert("سيتم إنشاء " + page + " في المرحلة القادمة!");
+
+function showPage(pageId) {
+
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document.getElementById(pageId).classList.add("active");
+
+    document.getElementById("registerMessage").style.display = "none";
+    document.getElementById("loginMessage").style.display = "none";
 }
+
+// هذه النماذج واجهة فقط حالياً.
+// سيتم ربطها ببايثون وقاعدة بيانات آمنة لاحقاً.
+
+function registerUser(event) {
+    event.preventDefault();
+
+    alert("واجهة إنشاء الحساب جاهزة! سنربطها ببايثون في المرحلة القادمة.");
+}
+
+function loginUser(event) {
+    event.preventDefault();
+
+    alert("واجهة تسجيل الدخول جاهزة! سنربطها ببايثون في المرحلة القادمة.");
+}
+
 </script>
 
 </body>
